@@ -6,7 +6,7 @@
 #    By: nagiorgi <nagiorgi@student.42lausanne.c    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/15 13:54:45 by nagiorgi          #+#    #+#              #
-#    Updated: 2024/02/21 14:21:17 by nagiorgi         ###   ########.fr        #
+#    Updated: 2024/02/21 15:03:38 by nagiorgi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ OBJS = $(patsubst src/%.c,$(BUILDDIR)/%.o,$(SRCS))
 INCLUDES = ./include
 NAME = philo
 RM = rm -f
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall #-Werror -Wextra
 GCC = gcc
 
 $(BUILDDIR)/%.o: src/%.c
