@@ -1,40 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.h                                            :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nagiorgi <nagiorgi@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/21 16:01:54 by nagiorgi          #+#    #+#             */
-/*   Updated: 2024/02/23 14:00:41 by nagiorgi         ###   ########.fr       */
+/*   Created: 2024/02/23 13:55:10 by nagiorgi          #+#    #+#             */
+/*   Updated: 2024/02/23 13:55:17 by nagiorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_H
-# define PHILO_H
+#include "philo.h"
 
-#include <pthread.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/time.h>
-
-// struct about time
-typedef struct s_philo
+long	get_time_in_ms()
 {
-	int			id;
-	pthread_t	thread_id;
-	int			time_to_eat;	
-	int			time_to_sleep;
-	int			time_to_think;
-	int			time_to_die;
-}	t_philo;
-
-// time management
-long	get_time_in_ms();
-
-// Philo action
-void	*philo_routine(void *arg)
-
-
-
-#endif
+	struct timeval tv;
+	gettimeofday(&tv, NULL);
+	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
+}
