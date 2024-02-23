@@ -6,7 +6,7 @@
 /*   By: nagiorgi <nagiorgi@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:30:24 by nagiorgi          #+#    #+#             */
-/*   Updated: 2024/02/23 15:21:53 by nagiorgi         ###   ########.fr       */
+/*   Updated: 2024/02/23 16:09:08 by nagiorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,10 @@ int	main(int argc, char **argv)
 		philos[i].id = i + 1;
 		philos[i].number_of_philo = number_of_philo;
 		philos[i].forks = forks;
-		philos[i].time_to_eat = 2000;
-		philos[i].time_to_sleep = 10;
-		philos[i].time_to_think = 10;
+		philos[i].time_to_eat = 200;
+		philos[i].time_to_sleep = 800;
+		philos[i].time_to_think = 800;
+		philos[i].time_to_die = 1820;
 		pthread_create(&philos[i].thread_id, NULL, philo_routine, &philos[i]);
 		i++;
 	}

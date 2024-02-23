@@ -6,7 +6,7 @@
 /*   By: nagiorgi <nagiorgi@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 13:53:39 by nagiorgi          #+#    #+#             */
-/*   Updated: 2024/02/23 15:21:27 by nagiorgi         ###   ########.fr       */
+/*   Updated: 2024/02/23 16:04:32 by nagiorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	eat(t_philo *philo)
 	pthread_mutex_lock(&philo->forks[philo->id - 1]);
 	pthread_mutex_lock(&philo->forks[philo->id % philo->number_of_philo]);
 	printf("%ld %d is %seating%s\n", get_time_in_ms(), philo->id, YELLOW_TEXT, RESET_TEXT);
+	philo->last_time_eat = get_time_in_ms();
 	usleep(philo->time_to_eat * 1000);
 	pthread_mutex_unlock(&philo->forks[philo->id - 1]);
 	pthread_mutex_unlock(&philo->forks[philo->id % philo->number_of_philo]);
@@ -45,11 +46,17 @@ void	*philo_routine(void *arg)
 {
 	t_philo		*philo = arg;
 	// action des philosophers
+	philo->last_time_eat = get_time_in_ms();
 	while (1)
 	{
+		if (get_time_in_ms() > (philo->last_time_eat + philo->time_to_die))
+		{
+			printf("%s%ld %d died%s\n",RED_TEXT, get_time_in_ms(), philo->id, RESET_TEXT);
+			return (NULL);
+		}
 		eat(philo);
 		nap(philo);
 		think(philo);
 	}
-	return NULL;
+	return (NULL);
 }
