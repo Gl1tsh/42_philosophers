@@ -6,7 +6,7 @@
 /*   By: nagiorgi <nagiorgi@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:30:24 by nagiorgi          #+#    #+#             */
-/*   Updated: 2024/02/23 16:09:08 by nagiorgi         ###   ########.fr       */
+/*   Updated: 2024/02/23 16:45:59 by nagiorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	main(int argc, char **argv)
 		philos[i].time_to_eat = 200;
 		philos[i].time_to_sleep = 800;
 		philos[i].time_to_think = 800;
-		philos[i].time_to_die = 1820;
+		philos[i].time_to_die = 1850;
 		pthread_create(&philos[i].thread_id, NULL, philo_routine, &philos[i]);
 		i++;
 	}

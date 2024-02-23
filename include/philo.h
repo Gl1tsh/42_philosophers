@@ -6,7 +6,7 @@
 /*   By: nagiorgi <nagiorgi@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:01:54 by nagiorgi          #+#    #+#             */
-/*   Updated: 2024/02/23 15:49:23 by nagiorgi         ###   ########.fr       */
+/*   Updated: 2024/02/23 16:36:50 by nagiorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/time.h>
+
+#define RED_TEXT "\x1B[31m"
+#define GREEN_TEXT "\x1B[32m"
+#define YELLOW_TEXT "\x1B[33m"
+#define RESET_TEXT "\x1B[0m"
 
 // struct about time
 typedef struct s_philo
@@ -34,6 +39,7 @@ typedef struct s_philo
 
 // time management
 long	get_time_in_ms();
+int		wait_or_die(int time_to_wait, t_philo *philo);
 
 // Philo action
 void	*philo_routine(void *arg);
