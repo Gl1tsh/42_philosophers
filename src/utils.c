@@ -6,7 +6,7 @@
 /*   By: nagiorgi <nagiorgi@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 13:55:10 by nagiorgi          #+#    #+#             */
-/*   Updated: 2024/02/23 16:42:48 by nagiorgi         ###   ########.fr       */
+/*   Updated: 2024/02/23 17:01:29 by nagiorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,17 @@ long	get_time_in_ms()
 int	wait_or_die(int time_to_wait, t_philo *philo)
 {
 	int	time_spend;
+	int	small_nap;
 
 	time_spend = 0;
-	while (time_to_wait > time_spend)
+	while (time_spend < time_to_wait)
 	{
-		usleep(10 * 1000);
-		time_spend += 10;
+		if (time_to_wait - time_spend < 10)
+			small_nap = time_to_wait - time_spend;
+		else
+			small_nap = 10;
+		usleep(small_nap * 1000);
+		time_spend += small_nap;
 		if (get_time_in_ms() > (philo->last_time_eat + philo->time_to_die))
 		{
 			printf("%s%ld %d died%s\n",RED_TEXT, get_time_in_ms(), philo->id, RESET_TEXT);
