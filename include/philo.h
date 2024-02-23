@@ -6,7 +6,7 @@
 /*   By: nagiorgi <nagiorgi@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:01:54 by nagiorgi          #+#    #+#             */
-/*   Updated: 2024/02/23 14:00:41 by nagiorgi         ###   ########.fr       */
+/*   Updated: 2024/02/23 14:02:13 by nagiorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ typedef struct s_philo
 long	get_time_in_ms();
 
 // Philo action
-void	*philo_routine(void *arg)
-
-
+void	*philo_routine(void *arg);
 
 #endif

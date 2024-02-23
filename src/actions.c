@@ -6,11 +6,12 @@
 /*   By: nagiorgi <nagiorgi@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 13:53:39 by nagiorgi          #+#    #+#             */
-/*   Updated: 2024/02/23 13:58:12 by nagiorgi         ###   ########.fr       */
+/*   Updated: 2024/02/23 14:03:09 by nagiorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+#include <stdio.h>
 
 #define RED_TEXT "\x1B[31m"
 #define GREEN_TEXT "\x1B[32m"

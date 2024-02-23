@@ -6,26 +6,12 @@
 /*   By: nagiorgi <nagiorgi@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:30:24 by nagiorgi          #+#    #+#             */
-/*   Updated: 2024/02/23 13:56:45 by nagiorgi         ###   ########.fr       */
+/*   Updated: 2024/02/23 14:03:24 by nagiorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "philo.h"
-
-void	*philo_routine(void *arg)
-{
-	t_philo		*philo = arg;
-	// action des philosophers
-	usleep(philo->id * 150 * 1000);
-	while (1)
-	{
-		eat(philo);
-		nap(philo);
-		think(philo);
-	}
-	return NULL;
-}
 
 int	main(int argc, char **argv)
 {
