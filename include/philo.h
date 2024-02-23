@@ -6,7 +6,7 @@
 /*   By: nagiorgi <nagiorgi@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:01:54 by nagiorgi          #+#    #+#             */
-/*   Updated: 2024/02/23 14:02:13 by nagiorgi         ###   ########.fr       */
+/*   Updated: 2024/02/23 15:00:51 by nagiorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,14 @@
 // struct about time
 typedef struct s_philo
 {
-	int			id;
-	pthread_t	thread_id;
-	int			time_to_eat;	
-	int			time_to_sleep;
-	int			time_to_think;
-	int			time_to_die;
+	int				id;
+	int				number_of_philo;
+	pthread_t		thread_id;
+	int				time_to_eat;	
+	int				time_to_sleep;
+	int				time_to_think;
+	int				time_to_die;
+	pthread_mutex_t	*forks;
 }	t_philo;
 
 // time management

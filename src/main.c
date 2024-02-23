@@ -6,7 +6,7 @@
 /*   By: nagiorgi <nagiorgi@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:30:24 by nagiorgi          #+#    #+#             */
-/*   Updated: 2024/02/23 14:03:24 by nagiorgi         ###   ########.fr       */
+/*   Updated: 2024/02/23 15:21:53 by nagiorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int	main(int argc, char **argv)
 {
 	int				i;
 	int				number_of_philo;
+	pthread_mutex_t	*forks;
 	t_philo			*philos;
 
 	number_of_philo = 5;
@@ -26,14 +27,29 @@ int	main(int argc, char **argv)
 	if (philos == NULL)
 		return (1);
 
+	// allocation pour le nombre de fourchette
+	forks = malloc(sizeof(pthread_mutex_t) * number_of_philo);
+	if (forks == NULL)
+		return (1);
+
+	// Creation de fourchettes pour philo
+	i = 0;
+	while (i < number_of_philo)
+	{
+		pthread_mutex_init(&forks[i], NULL);
+		i++;
+	}
+
 	// Creation de chaque chaque thread philosopher
 	i = 0;
 	while (i < number_of_philo)
 	{
 		philos[i].id = i + 1;
-		philos[i].time_to_eat = 200;
-		philos[i].time_to_sleep = 400;
-		philos[i].time_to_think = 800;
+		philos[i].number_of_philo = number_of_philo;
+		philos[i].forks = forks;
+		philos[i].time_to_eat = 2000;
+		philos[i].time_to_sleep = 10;
+		philos[i].time_to_think = 10;
 		pthread_create(&philos[i].thread_id, NULL, philo_routine, &philos[i]);
 		i++;
 	}
@@ -45,5 +61,13 @@ int	main(int argc, char **argv)
 		pthread_join(philos[i].thread_id, NULL);
 		i++;
 	}
+
+	i = 0;
+	while (i < number_of_philo)
+	{
+		pthread_mutex_destroy(&forks[i]);
+		i++;
+	}
+
 	return (0);
 }
