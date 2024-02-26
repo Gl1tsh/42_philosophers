@@ -6,7 +6,7 @@
 /*   By: nagiorgi <nagiorgi@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 13:55:10 by nagiorgi          #+#    #+#             */
-/*   Updated: 2024/02/27 00:12:09 by nagiorgi         ###   ########.fr       */
+/*   Updated: 2024/02/27 00:38:53 by nagiorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	wait_or_die(int time_to_wait, t_philo *philo)
 		if (get_time_in_ms() > (philo->last_time_eat + philo->time_to_die))
 		{
 			printf("%s%ld %d died%s\n", RYT, get_time_in_ms(),
-				philo->id, RYT);
+				philo->id, RXT);
 			return (1);
 		}
 	}
