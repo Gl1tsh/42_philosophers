@@ -6,7 +6,7 @@
 /*   By: nagiorgi <nagiorgi@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:30:24 by nagiorgi          #+#    #+#             */
-/*   Updated: 2024/02/27 00:37:38 by nagiorgi         ###   ########.fr       */
+/*   Updated: 2024/02/27 00:45:06 by nagiorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,7 @@ int	table_prepare(t_table *table)
 }
 
 // Creation de chaque chaque thread philosopher
-int	philo_launcher(t_table *table, int time_to_eat,
-	int time_to_sleep, int time_to_die)
+int	philo_launcher(t_table *table)
 {
 	int	i;
 
@@ -49,9 +48,9 @@ int	philo_launcher(t_table *table, int time_to_eat,
 		table->philos[i].id = i + 1;
 		table->philos[i].number_of_philo = table->number_of_philo;
 		table->philos[i].forks = table->forks;
-		table->philos[i].time_to_eat = time_to_eat;
-		table->philos[i].time_to_sleep = time_to_sleep;
-		table->philos[i].time_to_die = time_to_die;
+		table->philos[i].time_to_eat = table->time_to_eat;
+		table->philos[i].time_to_sleep = table->time_to_sleep;
+		table->philos[i].time_to_die = table->time_to_die;
 		pthread_create(&table->philos[i].thread_id, NULL, philo_routine,
 			&table->philos[i]);
 		i++;
@@ -111,8 +110,7 @@ int	main(int argc, char **argv)
 		return (1);
 	if (table_prepare(&table) != 0)
 		return (1);
-	philo_launcher(&table, table.time_to_eat, table.time_to_sleep,
-		table.time_to_die);
+	philo_launcher(&table);
 	table_clean(&table);
 	return (0);
 }
