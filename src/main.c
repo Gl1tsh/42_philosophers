@@ -6,7 +6,7 @@
 /*   By: nagiorgi <nagiorgi@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:30:24 by nagiorgi          #+#    #+#             */
-/*   Updated: 2024/02/27 19:42:21 by nagiorgi         ###   ########.fr       */
+/*   Updated: 2024/02/27 19:54:33 by nagiorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,13 @@ int	init_table(int argc, char **argv, t_table *table)
 		return (1);
 	}
 	table->number_of_philo = ft_atoi_custom(argv[1]);
-	if (table->number_of_philo < 1)
-		return (-1);
+	if (table->number_of_philo == 0)
+		return (1);
+	if (table->number_of_philo == 1)
+	{
+		printf("%s%ld 1 died%s\n", RYT, get_time_in_ms(), RXT);
+		return (1);
+	}
 	table->time_to_die = ft_atoi_custom(argv[2]);
 	table->time_to_eat = ft_atoi_custom(argv[3]);
 	table->time_to_sleep = ft_atoi_custom(argv[4]);
