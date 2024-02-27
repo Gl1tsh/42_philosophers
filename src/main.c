@@ -6,7 +6,7 @@
 /*   By: nagiorgi <nagiorgi@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:30:24 by nagiorgi          #+#    #+#             */
-/*   Updated: 2024/02/27 19:54:33 by nagiorgi         ###   ########.fr       */
+/*   Updated: 2024/02/27 20:04:38 by nagiorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ int	table_prepare(t_table *table)
 	i = 0;
 	while (i < table->number_of_philo)
 	{
-		pthread_mutex_init(&table->forks[i], NULL);
+		if (pthread_mutex_init(&table->forks[i], NULL) != 0)
+			return (1);
 		i++;
 	}
 	return (0);
@@ -53,8 +54,9 @@ int	philo_launcher(t_table *table)
 		table->philos[i].time_to_die = table->time_to_die;
 		table->philos[i].times_must_eat = table->times_must_eat;
 		table->philos[i].times_eaten = 0;
-		pthread_create(&table->philos[i].thread_id, NULL, philo_routine,
-			&table->philos[i]);
+		if (pthread_create(&table->philos[i].thread_id, NULL, philo_routine,
+			&table->philos[i]) != 0)
+			return (1);
 		i++;
 	}
 	return (0);
@@ -70,24 +72,21 @@ int	philo_launcher(t_table *table)
 int	table_clean(t_table *table)
 {
 	int	i;
-	int	err;
 
 	i = 0;
 	while (i < table->number_of_philo)
 	{
-		err = pthread_join(table->philos[i].thread_id, NULL);
-		if (err != 0)
-			return (1);
+		pthread_join(table->philos[i].thread_id, NULL);
 		i++;
 	}
 	i = 0;
 	while (i < table->number_of_philo)
 	{
-		err = pthread_mutex_destroy(&table->forks[i]);
-		if (err != 0)
-			return (1);
+		pthread_mutex_destroy(&table->forks[i]);
 		i++;
 	}
+	free(table->philos);
+	free(table->forks);
 	return (0);
 }
 /**
@@ -124,10 +123,17 @@ int	main(int argc, char **argv)
 {
 	t_table	table;
 
+	table.forks = NULL;
 	if (init_table(argc, argv, &table) != 0)
+	{
+		table_clean(&table);
 		return (1);
+	}
 	if (table_prepare(&table) != 0)
+	{
+		table_clean(&table);
 		return (1);
+	}
 	philo_launcher(&table);
 	table_clean(&table);
 	return (0);
