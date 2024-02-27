@@ -6,7 +6,7 @@
 /*   By: nagiorgi <nagiorgi@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:30:24 by nagiorgi          #+#    #+#             */
-/*   Updated: 2024/02/27 20:04:38 by nagiorgi         ###   ########.fr       */
+/*   Updated: 2024/02/27 20:09:01 by nagiorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	philo_launcher(t_table *table)
 		table->philos[i].times_must_eat = table->times_must_eat;
 		table->philos[i].times_eaten = 0;
 		if (pthread_create(&table->philos[i].thread_id, NULL, philo_routine,
-			&table->philos[i]) != 0)
+				&table->philos[i]) != 0)
 			return (1);
 		i++;
 	}
