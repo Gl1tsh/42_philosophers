@@ -6,7 +6,7 @@
 /*   By: nagiorgi <nagiorgi@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 13:55:10 by nagiorgi          #+#    #+#             */
-/*   Updated: 2024/02/27 19:39:45 by nagiorgi         ###   ########.fr       */
+/*   Updated: 2024/02/27 20:42:12 by nagiorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int	wait_or_die(int time_to_wait, t_philo *philo)
 	time_spend = 0;
 	while (time_spend < time_to_wait)
 	{
+		if (philo->table->stop)
+			return (1);
 		if (time_to_wait - time_spend < 10)
 			small_nap = time_to_wait - time_spend;
 		else
@@ -39,6 +41,7 @@ int	wait_or_die(int time_to_wait, t_philo *philo)
 		{
 			printf("%s%ld %d died%s\n", RYT, get_time_in_ms(),
 				philo->id, RXT);
+			philo->table->stop = 1;
 			return (1);
 		}
 	}

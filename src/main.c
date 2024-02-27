@@ -6,12 +6,13 @@
 /*   By: nagiorgi <nagiorgi@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:30:24 by nagiorgi          #+#    #+#             */
-/*   Updated: 2024/02/27 20:09:01 by nagiorgi         ###   ########.fr       */
+/*   Updated: 2024/02/27 20:55:53 by nagiorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "philo.h"
+#include <string.h>
 
 /**
  **	Allocation pour le nombre de philosopher
@@ -25,9 +26,11 @@ int	table_prepare(t_table *table)
 	table->philos = malloc(sizeof(t_philo) * table->number_of_philo);
 	if (table->philos == NULL)
 		return (1);
+	memset(table->philos, 0, sizeof(t_philo) * table->number_of_philo);
 	table->forks = malloc(sizeof(pthread_mutex_t) * table->number_of_philo);
 	if (table->forks == NULL)
 		return (1);
+	memset(table->forks, 0, sizeof(pthread_mutex_t) * table->number_of_philo);
 	i = 0;
 	while (i < table->number_of_philo)
 	{
@@ -54,6 +57,7 @@ int	philo_launcher(t_table *table)
 		table->philos[i].time_to_die = table->time_to_die;
 		table->philos[i].times_must_eat = table->times_must_eat;
 		table->philos[i].times_eaten = 0;
+		table->philos[i].table = table;
 		if (pthread_create(&table->philos[i].thread_id, NULL, philo_routine,
 				&table->philos[i]) != 0)
 			return (1);
@@ -73,17 +77,23 @@ int	table_clean(t_table *table)
 {
 	int	i;
 
-	i = 0;
-	while (i < table->number_of_philo)
+	if (table->philos)
 	{
-		pthread_join(table->philos[i].thread_id, NULL);
-		i++;
+		i = 0;
+		while (i < table->number_of_philo)
+		{
+			pthread_join(table->philos[i].thread_id, NULL);
+			i++;
+		}
 	}
-	i = 0;
-	while (i < table->number_of_philo)
+	if (table->forks)
 	{
-		pthread_mutex_destroy(&table->forks[i]);
-		i++;
+		i = 0;
+		while (i < table->number_of_philo)
+		{
+			pthread_mutex_destroy(&table->forks[i]);
+			i++;
+		}
 	}
 	free(table->philos);
 	free(table->forks);
@@ -116,6 +126,7 @@ int	init_table(int argc, char **argv, t_table *table)
 		table->times_must_eat = ft_atoi_custom(argv[5]);
 	else
 		table->times_must_eat = 0;
+	table->stop = 0;
 	return (0);
 }
 

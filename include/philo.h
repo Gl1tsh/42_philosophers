@@ -6,7 +6,7 @@
 /*   By: nagiorgi <nagiorgi@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:01:54 by nagiorgi          #+#    #+#             */
-/*   Updated: 2024/02/27 19:29:23 by nagiorgi         ###   ########.fr       */
+/*   Updated: 2024/02/27 20:29:25 by nagiorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@
 # define YXT "\x1B[33m"
 # define RXT "\x1B[0m"
 
+// struct pre-declaration
+struct	s_table;
+
 // struct about time
 typedef struct s_philo
 {
@@ -43,6 +46,7 @@ typedef struct s_philo
 	int				times_must_eat;
 	pthread_mutex_t	*forks;
 	long			last_time_eat;
+	struct s_table	*table;
 }	t_philo;
 
 // struct philo data
@@ -54,6 +58,7 @@ typedef struct s_table
 	int				time_to_sleep;
 	int				eat_count;
 	int				times_must_eat;
+	int				stop;
 	pthread_mutex_t	*forks;
 	t_philo			*philos;	
 }	t_table;
