@@ -6,7 +6,7 @@
 /*   By: nagiorgi <nagiorgi@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:30:24 by nagiorgi          #+#    #+#             */
-/*   Updated: 2024/02/27 00:45:06 by nagiorgi         ###   ########.fr       */
+/*   Updated: 2024/02/27 19:42:21 by nagiorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ int	philo_launcher(t_table *table)
 		table->philos[i].time_to_eat = table->time_to_eat;
 		table->philos[i].time_to_sleep = table->time_to_sleep;
 		table->philos[i].time_to_die = table->time_to_die;
+		table->philos[i].times_must_eat = table->times_must_eat;
+		table->philos[i].times_eaten = 0;
 		pthread_create(&table->philos[i].thread_id, NULL, philo_routine,
 			&table->philos[i]);
 		i++;
@@ -58,6 +60,13 @@ int	philo_launcher(t_table *table)
 	return (0);
 }
 
+/**
+ ** La fonction table_clean attend que tous les threads (philosophes)
+ ** 	se terminent et détruit tous les mutex (fourchettes).
+ ** Si une erreur se produit lors de l'attente d'un
+ ** 	thread ou de la destruction d'un mutex, la fonction renvoie 1.
+ ** Sinon, elle renvoie 0.
+ **/
 int	table_clean(t_table *table)
 {
 	int	i;
@@ -81,6 +90,10 @@ int	table_clean(t_table *table)
 	}
 	return (0);
 }
+/**
+ ** Saisis des informations par le user
+ ** et envois les data dans la struct
+ **/
 
 int	init_table(int argc, char **argv, t_table *table)
 {
@@ -96,9 +109,9 @@ int	init_table(int argc, char **argv, t_table *table)
 	table->time_to_eat = ft_atoi_custom(argv[3]);
 	table->time_to_sleep = ft_atoi_custom(argv[4]);
 	if (argc == 6)
-		table->eat_count = ft_atoi_custom(argv[5]);
+		table->times_must_eat = ft_atoi_custom(argv[5]);
 	else
-		table->eat_count = 0;
+		table->times_must_eat = 0;
 	return (0);
 }
 

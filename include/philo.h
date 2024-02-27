@@ -6,7 +6,7 @@
 /*   By: nagiorgi <nagiorgi@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:01:54 by nagiorgi          #+#    #+#             */
-/*   Updated: 2024/02/27 00:10:16 by nagiorgi         ###   ########.fr       */
+/*   Updated: 2024/02/27 19:29:23 by nagiorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ typedef struct s_philo
 	int				time_to_sleep;
 	int				time_to_think;
 	int				time_to_die;
+	int				times_eaten;
+	int				times_must_eat;
 	pthread_mutex_t	*forks;
 	long			last_time_eat;
 }	t_philo;
@@ -51,6 +53,7 @@ typedef struct s_table
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				eat_count;
+	int				times_must_eat;
 	pthread_mutex_t	*forks;
 	t_philo			*philos;	
 }	t_table;
