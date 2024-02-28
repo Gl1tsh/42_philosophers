@@ -6,7 +6,7 @@
 /*   By: nagiorgi <nagiorgi@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:01:54 by nagiorgi          #+#    #+#             */
-/*   Updated: 2024/02/27 20:29:25 by nagiorgi         ###   ########.fr       */
+/*   Updated: 2024/02/27 22:14:48 by nagiorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,7 @@ int		wait_or_die(int time_to_wait, t_philo *philo);
 void	*philo_routine(void *arg);
 
 int		ft_atoi_custom(const char *str);
+int		should_die(t_philo *philo);
+int		take_one_fork(t_philo *philo, int fork_id);
 
 #endif

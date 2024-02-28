@@ -6,38 +6,51 @@
 /*   By: nagiorgi <nagiorgi@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 13:53:39 by nagiorgi          #+#    #+#             */
-/*   Updated: 2024/02/27 21:39:12 by nagiorgi         ###   ########.fr       */
+/*   Updated: 2024/02/27 22:33:25 by nagiorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 #include <stdio.h>
 
-int	eat(t_philo *philo)
+int	take_forks(t_philo *philo)
 {
-	int	should_die;
-
 	if (philo->id == 1)
 	{
-		pthread_mutex_lock(&philo->forks[philo->id % philo->number_of_philo]);
-		printf("%ld %d grab a fork (left)\n", get_time_in_ms(), philo->id);
-		pthread_mutex_lock(&philo->forks[philo->id - 1]);
-		printf("%ld %d grab a fork (right)\n", get_time_in_ms(), philo->id);
+		if (take_one_fork(philo, philo->id % philo->number_of_philo) != 0)
+			return (1);
+		if (take_one_fork(philo, philo->id - 1) != 0)
+		{
+			pthread_mutex_unlock(&philo->forks[philo->id % philo->number_of_philo]);
+			return (1);
+		}
 	}
 	else
 	{
-		pthread_mutex_lock(&philo->forks[philo->id - 1]);
-		printf("%ld %d grab a fork (left)\n", get_time_in_ms(), philo->id);
-		pthread_mutex_lock(&philo->forks[philo->id % philo->number_of_philo]);
-		printf("%ld %d grab a fork (right)\n", get_time_in_ms(), philo->id);
+		if (take_one_fork(philo, philo->id - 1) != 0)
+			return (1);
+		if (take_one_fork(philo, philo->id % philo->number_of_philo) != 0)
+		{
+			pthread_mutex_unlock(&philo->forks[philo->id - 1]);
+			return (1);
+		}
 	}
+	return (0);
+}
+
+int	eat(t_philo *philo)
+{
+	int	wait_should_die;
+
+	if (take_forks(philo))
+		return (1);
 	printf("%ld %d is %seating%s\n", get_time_in_ms(), philo->id, YXT, RXT);
 	philo->last_time_eat = get_time_in_ms();
-	should_die = wait_or_die(philo->time_to_eat, philo);
+	wait_should_die = wait_or_die(philo->time_to_eat, philo);
 	philo->times_eaten++;
 	pthread_mutex_unlock(&philo->forks[philo->id - 1]);
 	pthread_mutex_unlock(&philo->forks[philo->id % philo->number_of_philo]);
-	return (should_die);
+	return (wait_should_die);
 }
 
 int	nap(t_philo *philo)
