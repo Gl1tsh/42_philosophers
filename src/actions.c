@@ -6,7 +6,7 @@
 /*   By: nagiorgi <nagiorgi@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 13:53:39 by nagiorgi          #+#    #+#             */
-/*   Updated: 2024/02/29 12:23:52 by nagiorgi         ###   ########.fr       */
+/*   Updated: 2024/02/29 14:48:14 by nagiorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	nap(t_philo *philo)
 int	think(t_philo *philo)
 {
 	printf("%ld %d is %sthinking%s\n", get_time_in_ms(), philo->id, GXT, RXT);
-	return (wait_or_die(5, philo));
+	return (wait_or_die(2, philo));
 }
 
 void	*philo_routine(void *arg)

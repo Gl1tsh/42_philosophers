@@ -6,7 +6,7 @@
 /*   By: nagiorgi <nagiorgi@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 13:55:10 by nagiorgi          #+#    #+#             */
-/*   Updated: 2024/02/29 12:22:15 by nagiorgi         ###   ########.fr       */
+/*   Updated: 2024/02/29 14:52:23 by nagiorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,21 @@ long	get_time_in_ms(void)
 
 int	should_die(t_philo *philo)
 {
+	pthread_mutex_lock(&philo->table->stop_mutex);
 	if (philo->table->stop)
-		return (1);
-	if (get_time_in_ms() > (philo->last_time_eat + philo->time_to_die))
 	{
-		printf("%s%ld %d died%s\n", RYT, get_time_in_ms(),
-			philo->id, RXT);
-		philo->table->stop = 1;
+		pthread_mutex_unlock(&philo->table->stop_mutex);
 		return (1);
 	}
+	if (get_time_in_ms() > (philo->last_time_eat + philo->time_to_die))
+	{
+		philo->table->stop = 1;
+		printf("%s%ld %d died%s\n", RYT, get_time_in_ms(),
+			philo->id, RXT);
+		pthread_mutex_unlock(&philo->table->stop_mutex);
+		return (1);
+	}
+	pthread_mutex_unlock(&philo->table->stop_mutex);
 	return (0);
 }
 

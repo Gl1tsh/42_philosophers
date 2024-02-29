@@ -6,7 +6,7 @@
 /*   By: nagiorgi <nagiorgi@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:30:24 by nagiorgi          #+#    #+#             */
-/*   Updated: 2024/02/27 20:55:53 by nagiorgi         ###   ########.fr       */
+/*   Updated: 2024/02/29 14:34:20 by nagiorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ int	table_prepare(t_table *table)
 			return (1);
 		i++;
 	}
+	if (pthread_mutex_init(&table->stop_mutex, NULL) != 0)
+		return (1);
 	return (0);
 }
 
@@ -95,6 +97,7 @@ int	table_clean(t_table *table)
 			i++;
 		}
 	}
+	pthread_mutex_destroy(&table->stop_mutex);
 	free(table->philos);
 	free(table->forks);
 	return (0);

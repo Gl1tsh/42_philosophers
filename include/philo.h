@@ -6,7 +6,7 @@
 /*   By: nagiorgi <nagiorgi@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:01:54 by nagiorgi          #+#    #+#             */
-/*   Updated: 2024/02/27 22:14:48 by nagiorgi         ###   ########.fr       */
+/*   Updated: 2024/02/29 14:31:05 by nagiorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct s_table
 	int				eat_count;
 	int				times_must_eat;
 	int				stop;
+	pthread_mutex_t	stop_mutex;
 	pthread_mutex_t	*forks;
 	t_philo			*philos;	
 }	t_table;
