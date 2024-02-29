@@ -6,7 +6,7 @@
 /*   By: nagiorgi <nagiorgi@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 13:55:10 by nagiorgi          #+#    #+#             */
-/*   Updated: 2024/02/27 22:26:28 by nagiorgi         ###   ########.fr       */
+/*   Updated: 2024/02/29 12:22:15 by nagiorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,12 @@ int	wait_or_die(int time_to_wait, t_philo *philo)
 {
 	long	start_time;
 
+	if (should_die(philo))
+		return (1);
 	start_time = get_time_in_ms();
 	while (get_time_in_ms() < (start_time + time_to_wait))
 	{
-		if (philo->table->stop)
-			return (1);
-		usleep(1000);
+		usleep(250);
 		if (should_die(philo))
 			return (1);
 	}
@@ -78,11 +78,11 @@ int	ft_atoi_custom(const char *str)
 int	take_one_fork(t_philo *philo, int fork_id)
 {
 	pthread_mutex_lock(&philo->forks[fork_id]);
-	printf("%ld %d grab a fork %d\n", get_time_in_ms(), philo->id, fork_id + 1);
 	if (should_die(philo) != 0)
 	{
 		pthread_mutex_unlock(&philo->forks[fork_id]);
 		return (1);
 	}
+	printf("%ld %d grab a fork %d\n", get_time_in_ms(), philo->id, fork_id + 1);
 	return (0);
 }
