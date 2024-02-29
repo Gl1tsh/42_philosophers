@@ -6,13 +6,45 @@
 /*   By: nagiorgi <nagiorgi@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:30:24 by nagiorgi          #+#    #+#             */
-/*   Updated: 2024/02/29 14:34:20 by nagiorgi         ###   ########.fr       */
+/*   Updated: 2024/02/29 15:17:40 by nagiorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "philo.h"
 #include <string.h>
+
+/**
+ ** Saisis des informations par le user
+ ** et envois les data dans la struct
+ **/
+
+int	table_init(int argc, char **argv, t_table *table)
+{
+	memset(&table->stop_mutex, 0, sizeof(pthread_mutex_t));
+	if (argc < 5 || argc > 6)
+	{
+		printf("wrong number of arguments\n");
+		return (1);
+	}
+	table->number_of_philo = ft_atoi_custom(argv[1]);
+	if (table->number_of_philo == 0)
+		return (1);
+	if (table->number_of_philo == 1)
+	{
+		printf("%s%ld 1 died%s\n", RYT, get_time_in_ms(), RXT);
+		return (1);
+	}
+	table->time_to_die = ft_atoi_custom(argv[2]);
+	table->time_to_eat = ft_atoi_custom(argv[3]);
+	table->time_to_sleep = ft_atoi_custom(argv[4]);
+	if (argc == 6)
+		table->times_must_eat = ft_atoi_custom(argv[5]);
+	else
+		table->times_must_eat = 0;
+	table->stop = 0;
+	return (0);
+}
 
 /**
  **	Allocation pour le nombre de philosopher
@@ -40,31 +72,6 @@ int	table_prepare(t_table *table)
 	}
 	if (pthread_mutex_init(&table->stop_mutex, NULL) != 0)
 		return (1);
-	return (0);
-}
-
-// Creation de chaque chaque thread philosopher
-int	philo_launcher(t_table *table)
-{
-	int	i;
-
-	i = 0;
-	while (i < table->number_of_philo)
-	{
-		table->philos[i].id = i + 1;
-		table->philos[i].number_of_philo = table->number_of_philo;
-		table->philos[i].forks = table->forks;
-		table->philos[i].time_to_eat = table->time_to_eat;
-		table->philos[i].time_to_sleep = table->time_to_sleep;
-		table->philos[i].time_to_die = table->time_to_die;
-		table->philos[i].times_must_eat = table->times_must_eat;
-		table->philos[i].times_eaten = 0;
-		table->philos[i].table = table;
-		if (pthread_create(&table->philos[i].thread_id, NULL, philo_routine,
-				&table->philos[i]) != 0)
-			return (1);
-		i++;
-	}
 	return (0);
 }
 
@@ -102,34 +109,29 @@ int	table_clean(t_table *table)
 	free(table->forks);
 	return (0);
 }
-/**
- ** Saisis des informations par le user
- ** et envois les data dans la struct
- **/
 
-int	init_table(int argc, char **argv, t_table *table)
+// Creation de chaque chaque thread philosopher
+int	philo_launcher(t_table *table)
 {
-	if (argc < 5 || argc > 6)
+	int	i;
+
+	i = 0;
+	while (i < table->number_of_philo)
 	{
-		printf("wrong number of arguments\n");
-		return (1);
+		table->philos[i].id = i + 1;
+		table->philos[i].number_of_philo = table->number_of_philo;
+		table->philos[i].forks = table->forks;
+		table->philos[i].time_to_eat = table->time_to_eat;
+		table->philos[i].time_to_sleep = table->time_to_sleep;
+		table->philos[i].time_to_die = table->time_to_die;
+		table->philos[i].times_must_eat = table->times_must_eat;
+		table->philos[i].times_eaten = 0;
+		table->philos[i].table = table;
+		if (pthread_create(&table->philos[i].thread_id, NULL, philo_routine,
+				&table->philos[i]) != 0)
+			return (1);
+		i++;
 	}
-	table->number_of_philo = ft_atoi_custom(argv[1]);
-	if (table->number_of_philo == 0)
-		return (1);
-	if (table->number_of_philo == 1)
-	{
-		printf("%s%ld 1 died%s\n", RYT, get_time_in_ms(), RXT);
-		return (1);
-	}
-	table->time_to_die = ft_atoi_custom(argv[2]);
-	table->time_to_eat = ft_atoi_custom(argv[3]);
-	table->time_to_sleep = ft_atoi_custom(argv[4]);
-	if (argc == 6)
-		table->times_must_eat = ft_atoi_custom(argv[5]);
-	else
-		table->times_must_eat = 0;
-	table->stop = 0;
 	return (0);
 }
 
@@ -138,7 +140,8 @@ int	main(int argc, char **argv)
 	t_table	table;
 
 	table.forks = NULL;
-	if (init_table(argc, argv, &table) != 0)
+	table.philos = NULL;
+	if (table_init(argc, argv, &table) != 0)
 	{
 		table_clean(&table);
 		return (1);
