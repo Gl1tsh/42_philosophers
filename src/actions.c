@@ -6,13 +6,20 @@
 /*   By: nagiorgi <nagiorgi@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 13:53:39 by nagiorgi          #+#    #+#             */
-/*   Updated: 2024/02/29 14:48:14 by nagiorgi         ###   ########.fr       */
+/*   Updated: 2024/02/29 16:15:40 by nagiorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 #include <stdio.h>
 
+/**
+ ** Check si le nombre de philo est paire ou impaire
+ ** Les paires prennent la fouchette de droite, puis la gauche
+ ** Les paires prennent la fouchette de gauche, puis la droite
+ ** Pourquoi ? eviter les deadlocks
+ ** Les nombreux sont la pour rendre les fourchettes si le philo meurt
+ **/
 int	take_forks(t_philo *philo)
 {
 	if (philo->id % 2 == 0)
@@ -39,6 +46,14 @@ int	take_forks(t_philo *philo)
 	return (0);
 }
 
+/**
+ ** 1. le philo prend 2 fourchettes
+ ** 2. print quand il mange
+ ** 3. mange le temps qu'il doit (argv)
+ ** 4. eaten++ (annonce combien de fois il a manger une fois de plus)
+ ** 5. Rendre les fourchettes pour les autres philo
+ ** return = savoir si il est pas mort
+**/
 int	eat(t_philo *philo)
 {
 	int	wait_should_die;
@@ -60,7 +75,11 @@ int	nap(t_philo *philo)
 	return (wait_or_die(philo->time_to_sleep, philo));
 }
 
-/*philo->time_to_think*/
+/**
+ ** Petite pause en pansant pour que le philo actuel ne reprenne pas les
+ **	fourchettes tout de suite.
+ ** (Laisse les autres prendre les fouchettes)
+ **/
 int	think(t_philo *philo)
 {
 	printf("%ld %d is %sthinking%s\n", get_time_in_ms(), philo->id, GXT, RXT);

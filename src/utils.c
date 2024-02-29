@@ -6,7 +6,7 @@
 /*   By: nagiorgi <nagiorgi@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 13:55:10 by nagiorgi          #+#    #+#             */
-/*   Updated: 2024/02/29 14:52:23 by nagiorgi         ###   ########.fr       */
+/*   Updated: 2024/02/29 16:21:09 by nagiorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,10 @@ long	get_time_in_ms(void)
 	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }
 
+/**
+ ** est-ce que le philo est mort
+ ** si oui, annonce que l'ont stop
+ **/
 int	should_die(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->table->stop_mutex);
@@ -41,6 +45,11 @@ int	should_die(t_philo *philo)
 	return (0);
 }
 
+/**
+ ** Suspend le thread pendant time_to_wait
+ ** usleep = microsieste pour voir si ont meurt
+ ** Pour respecter les 10ms entre la mort et l'annonce
+ **/
 int	wait_or_die(int time_to_wait, t_philo *philo)
 {
 	long	start_time;
@@ -81,6 +90,9 @@ int	ft_atoi_custom(const char *str)
 	return (result);
 }
 
+/**
+ ** Prend une fourchette (suspend le thread en attendant la fourchette demander)
+ **/
 int	take_one_fork(t_philo *philo, int fork_id)
 {
 	pthread_mutex_lock(&philo->forks[fork_id]);

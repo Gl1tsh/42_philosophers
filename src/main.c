@@ -6,7 +6,7 @@
 /*   By: nagiorgi <nagiorgi@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:30:24 by nagiorgi          #+#    #+#             */
-/*   Updated: 2024/02/29 15:17:40 by nagiorgi         ###   ########.fr       */
+/*   Updated: 2024/02/29 15:45:07 by nagiorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 
 int	table_init(int argc, char **argv, t_table *table)
 {
+	table->forks = NULL;
+	table->philos = NULL;
 	memset(&table->stop_mutex, 0, sizeof(pthread_mutex_t));
 	if (argc < 5 || argc > 6)
 	{
@@ -139,8 +141,6 @@ int	main(int argc, char **argv)
 {
 	t_table	table;
 
-	table.forks = NULL;
-	table.philos = NULL;
 	if (table_init(argc, argv, &table) != 0)
 	{
 		table_clean(&table);
