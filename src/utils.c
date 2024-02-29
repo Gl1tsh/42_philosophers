@@ -6,7 +6,7 @@
 /*   By: nagiorgi <nagiorgi@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 13:55:10 by nagiorgi          #+#    #+#             */
-/*   Updated: 2024/02/29 16:21:09 by nagiorgi         ###   ########.fr       */
+/*   Updated: 2024/02/29 16:39:13 by nagiorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,10 @@ int	wait_or_die(int time_to_wait, t_philo *philo)
 	}
 	return (0);
 }
-
+/**
+ ** Convertis seulement les nombres positifs avec avec whitespace
+ **	autour possiblement.
+ **/
 int	ft_atoi_custom(const char *str)
 {
 	int	i;
