@@ -1,4 +1,7 @@
 # PHILOSOPHER
+<p align="center">
+  <img width="1256" alt="philosopher_run" src="https://github.com/Gl1tsh/42_philosophers/assets/69108289/65cde525-a657-4818-9e48-037123029c97">
+</p>
 
 The Philosopher project at 42 school is a classic problem in concurrent programming known as the "Dining Philosophers Problem." The objective of the project is to implement a simulation of this problem using threads and mutexes in C.
 
